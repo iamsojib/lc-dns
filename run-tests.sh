@@ -10,7 +10,7 @@ fi
 
 GOSS_WAIT_OPS="-r 60s -s 1s"
 
-docker build --tag lancachenet/lancache-dns:goss-test .
+docker build --tag iamsojib/lc-dns:goss-test .
 case $1 in
   circleci)
     shift;
@@ -20,7 +20,7 @@ case $1 in
 		shift
 	fi
     export GOSS_OPTS="$GOSS_OPTS --format junit"
-	dgoss run -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ lancachenet/lancache-dns:goss-test > reports/goss/report.xml
+	dgoss run -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ iamsojib/lc-dns:goss-test > reports/goss/report.xml
 	#store result for exit code
 	RESULT=$?
 	#delete the junk that goss currently outputs :(
@@ -34,7 +34,7 @@ case $1 in
 		KEEPIMAGE=true
 		shift
 	fi
-	dgoss edit -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ lancachenet/lancache-dns:goss-test
+	dgoss edit -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ iamsojib/lc-dns:goss-test
 	RESULT=$?
     ;;
   edit)
@@ -43,7 +43,7 @@ case $1 in
 		KEEPIMAGE=true
 		shift
 	fi
-	dgoss edit -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ lancachenet/lancache-dns:goss-test
+	dgoss edit -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ iamsojib/lc-dns:goss-test
 	RESULT=$?
     ;;
   *)
@@ -51,10 +51,10 @@ case $1 in
 		KEEPIMAGE=true
 		shift
 	fi
-	dgoss run -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ lancachenet/lancache-dns:goss-test
+	dgoss run -e USE_GENERIC_CACHE=true -e STEAMCACHE_IP=127.0.0.2 -e LANCACHE_IP=127.0.0.1 -e UPSTREAM_DNS="8.8.8.8; 1.1.1.1" $@ iamsojib/lc-dns:goss-test
 	RESULT=$?
     ;;
 esac
-[[ "$KEEPIMAGE" == "true" ]] || docker rmi lancachenet/lancache-dns:goss-test
+[[ "$KEEPIMAGE" == "true" ]] || docker rmi iamsojib/lc-dns:goss-test
 
 exit $RESULT
